@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refresh &amp; CTR Opportunity Scoring — A Content Action Playbook</title>
+<style>
+  :root {
+    --ink: #23241f;
+    --ink-soft: #55564c;
+    --paper: #faf8f3;
+    --paper-panel: #f1ede2;
+    --rule: #d8d2c1;
+    --accent: #7a5c3e;
+    --accent-soft: #b98a52;
+    --good: #3f6b4a;
+    --bad: #a1462f;
+    --serif: "Iowan Old Style", "Palatino Linotype", "Georgia", serif;
+    --sans: "Inter", "Segoe UI", -apple-system, sans-serif;
+    --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    line-height: 1.65;
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  header.masthead {
+    border-bottom: 1px solid var(--rule);
+    padding: 64px 0 40px;
+  }
+
+  .kicker {
+    font-family: var(--sans);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+    margin: 0 0 18px;
+  }
+
+  h1.title {
+    font-size: clamp(30px, 5vw, 44px);
+    line-height: 1.15;
+    margin: 0 0 22px;
+    font-weight: 500;
+    max-width: 15ch;
+  }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 22px;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  .meta-row a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
+
+  .abstract {
+    background: var(--paper-panel);
+    border-left: 3px solid var(--accent-soft);
+    padding: 22px 26px;
+    margin-top: 34px;
+    font-size: 17px;
+    color: var(--ink);
+  }
+  .abstract p { margin: 0; }
+  .abstract .label {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  nav.toc {
+    font-family: var(--sans);
+    font-size: 13px;
+    padding: 26px 0 0;
+    color: var(--ink-soft);
+  }
+  nav.toc a { color: var(--ink-soft); text-decoration: none; margin-right: 18px; }
+  nav.toc a:hover { color: var(--accent); }
+
+  main { padding: 8px 0 40px; }
+
+  section { padding: 46px 0; border-bottom: 1px solid var(--rule); }
+  section:last-of-type { border-bottom: none; }
+
+  h2 {
+    font-family: var(--sans);
+    font-size: 14px;
+    text-transform: none;
+    letter-spacing: 0.01em;
+    color: var(--accent);
+    margin: 0 0 6px;
+  }
+  h2 .num { color: var(--accent-soft); margin-right: 8px; }
+
+  h3.subtitle {
+    font-size: 25px;
+    font-weight: 500;
+    margin: 0 0 22px;
+    max-width: 32ch;
+  }
+
+  p { font-size: 17px; max-width: 68ch; }
+  ul, ol { max-width: 66ch; font-size: 16.5px; }
+  li { margin-bottom: 6px; }
+
+  code, .mono { font-family: var(--mono); font-size: 0.88em; background: var(--paper-panel); padding: 1px 5px; border-radius: 3px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--sans);
+    font-size: 14.5px;
+    margin: 18px 0 8px;
+  }
+  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--rule); }
+  th { color: var(--ink-soft); font-weight: 600; font-size: 12.5px; letter-spacing: 0.02em; }
+  tr:last-child td { border-bottom: 1px solid var(--ink); }
+  td.num { font-family: var(--mono); }
+
+  .callout {
+    font-family: var(--sans);
+    font-size: 14px;
+    border: 1px solid var(--rule);
+    background: var(--paper-panel);
+    padding: 16px 20px;
+    border-radius: 4px;
+    margin: 22px 0;
+  }
+  .callout.warn { border-color: #d8b98a; background: #fbf1e3; }
+  .callout .tag {
+    display: inline-block;
+    font-size: 11px;
+    color: #fff;
+    background: var(--accent);
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+  }
+  .callout.warn .tag { background: var(--bad); }
+
+  .stat-row {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    margin: 20px 0 6px;
+  }
+  .stat {
+    font-family: var(--sans);
+  }
+  .stat .n { font-family: var(--serif); font-size: 34px; color: var(--ink); display: block; }
+  .stat .l { font-size: 12.5px; color: var(--ink-soft); }
+  .stat .n.good { color: var(--good); }
+  .stat .n.bad { color: var(--bad); }
+
+  .verdict {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+  .verdict.confirmed { background: #dcebe0; color: var(--good); }
+  .verdict.opposite { background: #f4ded8; color: var(--bad); }
+
+  footer {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-soft);
+    padding: 40px 0 60px;
+  }
+  footer a { color: var(--accent); }
+
+  @media (max-width: 600px) {
+    header.masthead { padding: 44px 0 28px; }
+    section { padding: 32px 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <p class="kicker">FlyRank ML Internship — Search Intelligence Capstone</p>
+    <h1 class="title">Refresh &amp; CTR Opportunity Scoring: A Content Action Playbook</h1>
+    <div class="meta-row">
+      <span>MARYAM ARSHAD</span>
+      <span>Lane: Refresh / Content Opportunity Scoring</span>
+      <span><a href="https://github.com/maryam12arshad17/flyrank-internship-ml.git">Repository</a></span>
+      <span>31-08-2026</span>
+    </div>
+
+    <div class="abstract">
+      <span class="label">Abstract</span>
+      <p>This study asks which content pages on FlyRank's client portfolio are worth reviewing first for a refresh, using March 2026 daily search performance data. A transparent CTR-position rule baseline and a Random Forest classifier were both evaluated on a client-grouped, out-of-sample split to avoid overstating performance. The Random Forest showed directional improvement over the rule baseline (precision@50 of 0.56 versus 0.16), though a naive random split inflated this figure to 0.84, revealing meaningful client-specific memorization. The result is a ranked, reason-coded action queue with explicit human-review requirements and no-automation rules, intended as decision-support — not a guarantee of outcome.</p>
+    </div>
+
+    <nav class="toc">
+      <a href="#intro">Introduction</a>
+      <a href="#data">Data</a>
+      <a href="#method">Methodology</a>
+      <a href="#results">Results</a>
+      <a href="#limits">Limitations</a>
+      <a href="#recs">Recommendations</a>
+      <a href="#repro">Reproducibility</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="intro">
+      <h2><span class="num">01</span>Introduction</h2>
+      <h3 class="subtitle">Which pages deserve a reviewer's time first?</h3>
+      <p>Content teams managing large portfolios of pages need a repeatable way to decide which pages deserve attention first — refreshing outdated content, fixing poor click-through rates, or simply monitoring stable performers. Manual review of every page doesn't scale.</p>
+      <p>This project builds and honestly validates a ranked action system for FlyRank's <em>Refresh / Content Opportunity Scoring</em> lane: given a page's observed search performance in a given month, which pages are worth a human reviewer's time first, and why?</p>
+    </section>
+
+    <section id="data">
+      <h2><span class="num">02</span>Data</h2>
+      <h3 class="subtitle">One month, one release, clearly scoped.</h3>
+      <p>Data comes from the FlyRank internship warehouse release, table <code>fact_content_daily_performance</code> (daily grain, aggregated to monthly per content item), for <code>month=2026-03</code> — a mid-panel month, held apart from the sealed final month (<code>2026-06</code>) used for no part of this analysis.</p>
+      <p><strong>Features used:</strong> trailing GSC impressions and clicks, average position, trailing GA4 sessions/pageviews/engaged sessions, days observed, days with GSC data available, and three engineered ratios — click-through rate, engagement rate, and GSC coverage.</p>
+
+      <div class="callout">
+        <span class="tag">Deliberately excluded</span>
+        <ul style="margin:8px 0 0;">
+          <li><code>impression_change</code> — the exact quantity the label is derived from (confirmed via a deliberate leak test, see Results)</li>
+          <li><code>last_optimized_date</code>, <code>optimization_eligible_date</code> — prior decision flags, not world signal</li>
+          <li>AI-referral columns — present in 69% of rows but non-zero in only 0.03%, too sparse to carry signal</li>
+          <li>Client and content identifiers — used only for joining and grouping, never as model inputs</li>
+        </ul>
+      </div>
+      <p>No client names, domains, URLs, or raw exports appear anywhere in this report or its supporting notebooks.</p>
+    </section>
+
+    <section id="method">
+      <h2><span class="num">03</span>Methodology</h2>
+      <h3 class="subtitle">A transparent rule first, testing before assuming.</h3>
+
+      <p>Before writing any rule, three candidate signals were tested against observed March performance:</p>
+
+      <table>
+        <tr><th>Signal</th><th>Test</th><th>Verdict</th></tr>
+        <tr><td>Staleness (days since content update)</td><td>Stale vs. fresh content, avg. clicks</td><td><span class="verdict opposite">OPPOSITE</span></td></tr>
+        <tr><td>CTR vs. search position</td><td>Top-10 vs. below-10 position, avg. CTR</td><td><span class="verdict confirmed">CONFIRMED</span></td></tr>
+        <tr><td>Search volume vs. captured clicks</td><td>High vs. low keyword volume, avg. clicks</td><td><span class="verdict opposite">OPPOSITE</span></td></tr>
+      </table>
+
+      <p>Stale content <em>outperformed</em> fresh content — the reverse of the initial assumption, likely because unupdated pages are older, established performers that simply don't need touching. High search-volume keywords also underperformed low-volume ones, likely due to competition absorbing more of the larger opportunity. Only the CTR-position relationship held in the expected direction, so the baseline rule is built on it: <strong>flag a page if it holds a top-10 average position but its CTR falls below the average CTR of other top-10 pages</strong> — a likely title or snippet problem, not a ranking problem.</p>
+
+      <p><strong>Model:</strong> a Random Forest classifier (200 trees, max depth 6) predicting <code>is_declining</code> — whether a content item's impressions fell in the second half of March versus the first half, a within-month, past-observable proxy for decline. Eleven features, all trailing and past-only.</p>
+
+      <p><strong>Split:</strong> client-grouped (70/30), not random. A random split lets the same client's content appear in both train and test, letting the model partly memorize client-specific patterns rather than learn a generalizable signal.</p>
+    </section>
+
+    <section id="results">
+      <h2><span class="num">04</span>Results</h2>
+      <h3 class="subtitle">The honest split costs you something — and that's the point.</h3>
+
+      <p>Model versus baseline, same client-grouped split, same metric:</p>
+
+      <table>
+        <tr><th>Method</th><th>precision@50</th><th>AUC</th></tr>
+        <tr><td>Base rate (random ranking)</td><td class="num">0.18</td><td class="num">0.500</td></tr>
+        <tr><td>Rule-based baseline</td><td class="num">0.16</td><td class="num">—</td></tr>
+        <tr><td>Logistic Regression</td><td class="num">0.66</td><td class="num">0.775</td></tr>
+        <tr><td>Random Forest</td><td class="num">0.58</td><td class="num">0.803</td></tr>
+      </table>
+
+      <p>The baseline falls slightly below the random base rate — expected, since it was built to catch CTR-fix opportunities, not to predict decline; it was never designed for this exact question. Both models substantially outrank it on this task.</p>
+
+      <p>The split itself matters more than it might seem:</p>
+
+      <div class="stat-row">
+        <div class="stat"><span class="n bad">0.84</span><span class="l">precision@50, naive random split</span></div>
+        <div class="stat"><span class="n good">0.56</span><span class="l">precision@50, honest grouped split</span></div>
+      </div>
+
+      <p>The gap shows the naive split overstated performance — part of the "before" score reflected the model recognizing clients it had already trained on, not genuinely predicting decline on unseen ones. <strong>0.56 is the number this report trusts.</strong></p>
+
+      <div class="callout warn">
+        <span class="tag">Leakage check</span>
+        Adding the label-derived <code>impression_change</code> column pushed AUC to a perfect 1.0 — confirming both that the test harness catches leakage, and why that column stays permanently excluded. A single-feature scan found no individual feature above 0.95 AUC on its own (highest: GSC data-coverage days, at 0.814 — plausible, not suspicious).
+      </div>
+
+      <p><strong>Errors:</strong> of 49,823 grouped-split test predictions, 8,987 (18%) were wrong. Errors clustered around content with thin GSC coverage (under half the month's days with usable data), where predictions are inherently less reliable — though at least one wrong case had full data coverage, showing aggregate monthly stats alone don't catch every decline pattern.</p>
+    </section>
+
+    <section id="limits">
+      <h2><span class="num">05</span>Limitations &amp; honest framing</h2>
+      <h3 class="subtitle">What this can and cannot tell you.</h3>
+      <ul>
+        <li>This is <strong>observed, decision-support evidence</strong> from one month of data (March 2026) on one 104-client cohort — not a causal claim that acting on a flagged page improves its performance, and not validated on other months or client sets.</li>
+        <li>The two dominant model features (GSC data availability and coverage) may partly reflect a data-availability artifact rather than genuine performance decline, since the label itself is built from the same underlying metric.</li>
+        <li>58% of scored content in this queue has thin GSC coverage (under 50% of the month) — predictions on these rows should be treated as lower confidence, not ignored.</li>
+        <li>The panel is unbalanced: clients differ by as much as 17 months in how much history they have, so cross-client comparisons aren't always apples-to-apples.</li>
+      </ul>
+    </section>
+
+    <section id="recs">
+      <h2><span class="num">06</span>Ranked recommendations</h2>
+      <h3 class="subtitle">The action playbook.</h3>
+      <p>Content is flagged using percentile-based thresholds (90th percentile of predicted decline probability, not a fixed cutoff) into four reason codes:</p>
+      <ul>
+        <li><code>high_risk_ranked_page</code> — top-10% decline risk <em>and</em> good search position — highest priority</li>
+        <li><code>high_risk_low_visibility</code> — top-10% decline risk, lower search position</li>
+        <li><code>thin_data_coverage</code> — under 50% of the month has usable data; verify before acting</li>
+        <li><code>lower_priority</code> — monitor only</li>
+      </ul>
+      <p>All 4,988 rows flagged as high-risk carry reliable data coverage, so a reviewer can trust the top of the queue directly. A reviewer should open the live page and current search results before acting on any flag — a numeric score never replaces reading the content.</p>
+
+      <div class="callout warn">
+        <span class="tag">Never automate</span>
+        Auto-publishing or auto-editing content from an action label; auto-deprioritizing or deleting <code>lower_priority</code> content; client-facing traffic-recovery guarantees; or applying this exact model to a new month or client cohort without re-validation.
+      </div>
+    </section>
+
+    <section id="repro">
+      <h2><span class="num">07</span>Reproducibility</h2>
+      <h3 class="subtitle">Re-run it yourself.</h3>
+      <p>All notebooks live in <code>work/notebooks/</code> of the linked repository. Random seed fixed at <code>42</code> throughout. To reproduce: open a notebook in Colab, add a Hugging Face read token as a Colab secret named <code>HF_TOKEN</code> (with dataset access granted), then Runtime → Run all.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    Built on the FlyRank ML Internship dataset. Learn more at <a href="https://flyrank.ai">flyrank.ai</a>.
+  </footer>
+</div>
+
+</body>
+</html>
