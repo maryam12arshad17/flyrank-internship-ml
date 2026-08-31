@@ -1,7 +1,7 @@
 # Capstone Report — Refresh / Content Opportunity Scoring
 - **Author:** Maryam Arshad
 - **Lane:** Refresh / Content Opportunity Scoring
-- **Repo:** [apna repo URL]
+- **Repo:** https://github.com/maryam12arshad17/flyrank-internship-ml.git
 - **Date:** 31-08-2026
 
 ## 0. Abstract
